@@ -1,4 +1,4 @@
-import aoc_input as aoc
+from aoc_input import AOCInput
 
 
 

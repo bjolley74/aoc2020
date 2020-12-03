@@ -22,7 +22,11 @@ def main():
         print(f'\nError occured changing directory to {new_folder_name}\n')
     try:
         with open(new_file_name,'w') as python_file:
-            python_file.write('import aoc_input as aoc')
+            python_file.write('from aoc_input import AOCInput')
+            python_file.write('\ndef ans1():\n\tpass\n\n')
+            python_file.write('\ndef ans2():\n\tpass\n\n')
+            python_file.write('\ndef test1():\n\tpass\n\n')
+            python_file.write('\ndef test2():\n\tpass\n\n')
             python_file.write('\n\n\n\ndef main():\n\tpass\n\n')
             python_file.write('if __name__ == "__main__":\n')
             python_file.write('\tmain()')
