@@ -31,7 +31,7 @@ def main():
         print(f'The answer for the puzzle is {ans(puzzle_input)}')
     else:
         print('Test failed')
-    pass
+    
 
 if __name__ == "__main__":
     main()
