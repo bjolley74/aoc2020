@@ -2,6 +2,24 @@ import os
 from glob import glob
 from shutil import copyfile
 
+def write_file(file_obj):
+    file_obj.write('from aoc_input import AOCInput\n\n')
+    file_obj.write('test_input = []\n')
+    file_obj.write('puzzle_input = AOCInput()\n\n')
+    file_obj.write('# ans() finds answer to the puzzle\n')
+    file_obj.write('def ans(data_in: list):\n    return 0\n\n')
+    file_obj.write('#tests ans on test input')
+    file_obj.write('def test_ans(data_in: list) -> bool:\n    return False\n\n')
+    file_obj.write('def main():\n')
+    file_obj.write('    if test_ans(test_input):\n')
+    file_obj.write('        answer = ans(puzzle_input)\n')
+    file_obj.write("        print(f'The answer for puzzle is {answer}')\n")
+    file_obj.write("    else:\n")
+    file_obj.write("        print('Test failed')\n")
+    file_obj.write('if __name__ == "__main__":\n')
+    file_obj.write('    main()\n')
+    return "file written"
+
 def main():
     max_num = 0
     directories = glob('day*')
@@ -10,46 +28,39 @@ def main():
         if num > max_num:
             max_num = num
     new_folder_name = 'day' + str(max_num + 1) + '/'
-    new_file_name = 'day' + str(max_num + 1) + '.py'
+    #make new directory for the new day
     try:
         os.mkdir(new_folder_name)
     except (IOError, OSError) as err:
         print(f'\nError occured writing {new_folder_name}\n')
         raise err
+    #change path into newly created directory
     try:
         os.chdir(new_folder_name)
     except (IOError, OSError) as err:
         print(f'\nError occured changing directory to {new_folder_name}\n')
+    #write new .py file for part 1
     try:
-        with open(new_file_name,'w') as python_file:
-            python_file.write('from aoc_input import AOCInput\n\n')
-            python_file.write('def ans1():\n    return 0\n\n')
-            python_file.write('def ans2():\n    return 0\n\n')
-            python_file.write('def test1():\n    return False\n\n')
-            python_file.write('def test2():\n    return False\n\n')
-            python_file.write('def main():\n')
-            python_file.write('    if test1():\n')
-            python_file.write('        answer1 = ans1()\n')
-            python_file.write("        print(f'The answer for puzzle one is {answer1}')\n")
-            python_file.write("    else:")
-            python_file.write("        print('Test1 failed')\n")
-            python_file.write('    if test2():\n')
-            python_file.write('        answer2 = ans2()\n')
-            python_file.write("        print(f'The answer for puzzle two is {answer2}')\n")
-            python_file.write("    else:")
-            python_file.write("        print('Test2 failed')\n\n")
-            python_file.write('if __name__ == "__main__":\n')
-            python_file.write('    main()\n')
+        with open('part1.file','w') as python_file:
+            write_file(python_file)
     except (IOError, OSError) as err:
-        print(f'\nError occured while writing {new_file_name}\n')
+        print(f'\nError occured while writing part1.py\n')
         raise err
+    #write new .py file for part 2
     try:
-        input_file = open('puzzle_input.txt', 'w')
+        with open('part2.file','w') as python_file:
+            write_file(python_file)
+    except (IOError, OSError) as err:
+        print(f'\nError occured while writing part2.py\n')
+        raise err
+    #write new puzzle_input.txt
+    try:
+        with open('puzzle_input.txt', 'w') as input_file:
+            input_file.write('')
     except (IOError, OSError) as err:
         print('\nError occured opening puzzle_input.txt.\n')
         raise err
-    finally:
-        input_file.close()
+    #copy aoc_input.py from parent directory
     try:
         copyfile('../aoc_input.py', 'aoc_input.py')
     except (IOError, OSError) as err:
