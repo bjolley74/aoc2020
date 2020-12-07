@@ -4,18 +4,18 @@ from shutil import copyfile
 
 def write_file(file_obj):
     file_obj.write('from aoc_input import AOCInput\n\n')
-    file_obj.write('test_input = []\n')
+    file_obj.write('test_input = AOCInput("test_input.py")\n')
     file_obj.write('puzzle_input = AOCInput()\n\n')
     file_obj.write('# ans() finds answer to the puzzle\n')
     file_obj.write('def ans(data_in: list):\n    return 0\n\n')
-    file_obj.write('#tests ans on test input')
+    file_obj.write('#tests ans on test input\n')
     file_obj.write('def test_ans(data_in: list) -> bool:\n    return False\n\n')
     file_obj.write('def main():\n')
     file_obj.write('    if test_ans(test_input):\n')
     file_obj.write('        answer = ans(puzzle_input)\n')
     file_obj.write("        print(f'The answer for puzzle is {answer}')\n")
     file_obj.write("    else:\n")
-    file_obj.write("        print('Test failed')\n")
+    file_obj.write("        print('Test failed')\n\n")
     file_obj.write('if __name__ == "__main__":\n')
     file_obj.write('    main()\n')
     return "file written"
