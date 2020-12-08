@@ -1,10 +1,16 @@
 import os
 from glob import glob
 from shutil import copyfile
+from pathlib import Path
+
+target_dir = Path('c:/users/bobby/mypython/AOC/aoc2020')
+current_directory = Path(os.getcwd())
+if current_directory != target_dir:
+    os.chdir(target_dir)
 
 def write_file(file_obj):
     file_obj.write('from aoc_input import AOCInput\n\n')
-    file_obj.write('test_input = AOCInput("test_input.py")\n')
+    file_obj.write('test_input = AOCInput(filename="test_input.py")\n')
     file_obj.write('puzzle_input = AOCInput()\n\n')
     file_obj.write('# ans() finds answer to the puzzle\n')
     file_obj.write('def ans(data_in: list):\n    return 0\n\n')
@@ -41,14 +47,14 @@ def main():
         print(f'\nError occured changing directory to {new_folder_name}\n')
     #write new .py file for part 1
     try:
-        with open('part1.file','w') as python_file:
+        with open('part1.py','w') as python_file:
             write_file(python_file)
     except (IOError, OSError) as err:
         print(f'\nError occured while writing part1.py\n')
         raise err
     #write new .py file for part 2
     try:
-        with open('part2.file','w') as python_file:
+        with open('part2.py','w') as python_file:
             write_file(python_file)
     except (IOError, OSError) as err:
         print(f'\nError occured while writing part2.py\n')
@@ -59,6 +65,13 @@ def main():
             input_file.write('')
     except (IOError, OSError) as err:
         print('\nError occured opening puzzle_input.txt.\n')
+        raise err
+    #write new test_input.txt
+    try:
+        with open('test_input.txt', 'w') as input_file:
+            input_file.write('')
+    except (IOError, OSError) as err:
+        print('\nError occured opening test_input.txt.\n')
         raise err
     #copy aoc_input.py from parent directory
     try:
