@@ -21,7 +21,6 @@ def log_wrap(pre, post):
         return call
     return decorate
 
-
 def entering(func):
     """Pre function logging"""
     logger.debug(f"entered {func.__name__}")
@@ -29,10 +28,6 @@ def entering(func):
 def exiting(func):
     """Post function logging"""
     logger.debug(f"exiting {func.__name__}")
-
-@log_wrap(entering, exiting)
-def lists(lst: list)-> list:
-    pass
 
 # get_data section
 @log_wrap(entering, exiting)
