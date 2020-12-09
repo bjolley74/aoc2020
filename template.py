@@ -42,19 +42,19 @@ def get_data(fn: str) -> list:
     return output
 
 
-@log_wrap
+@log_wrap(entering, exiting)
 def ans(data_in: list):
     """ans() finds answer to the puzzle"""
     return 0
 
-@log_wrap
+@log_wrap(entering, exiting)
 def test_ans(data_in: list) -> bool:
     """test ans() on test_input.txt"""
     result = ans(data_in)
     # set return to check that ans == expected result
     return result == 1000000
 
-@log_wrap
+@log_wrap(entering, exiting)
 def main():
     #load_test_input
     test_input = get_data('test_input.txt')
