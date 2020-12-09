@@ -3,7 +3,7 @@ import logging
 from copy import deepcopy
 
 #    logger set up
-log_file = "file.log"
+log_file = "part1.log"
 log_level = logging.DEBUG
 f = '%(asctime)-15s: %(levelname)-8s: %(message)s'
 logging.basicConfig(level=log_level, filename=log_file, filemode='w+', format=f)
