@@ -13,7 +13,7 @@ def log_wrap(pre, post):
     """Wrapper"""
     def decorate(func):
         """Decorater"""
-        def call(*args,**kwargs):
+        def call(*args, **kwargs):
             """Actual Wrapper"""
             pre(func)
             result = func(*args, **kwargs)
