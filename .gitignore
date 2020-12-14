@@ -5,3 +5,4 @@ day8/
 *.pyc
 /venv
 /.idea
+/day10/part2.py

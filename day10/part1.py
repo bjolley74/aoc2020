@@ -46,14 +46,18 @@ def get_data(fn: str) -> list:
 @log_wrap(entering, exiting)
 def det_next_adapter(adapters: list, joltage: int) -> int:
     """determines the next adapter"""
-    if len(adapters) < 1:
+    if len(adapters) == 0:
+        logger.debug('less than 1')
         return None
     elif len(adapters) == 1:
         return adapters[0]
     else:
         possible_adapters = [x for x in adapters if x > joltage and (x - 1) - joltage <= 3]
         logger.debug(f'possible adapters: {possible_adapters}')
-        return min(possible_adapters)
+        try:
+            return min(possible_adapters)
+        except ValueError:
+            return None
 
 
 @log_wrap(entering, exiting)
@@ -64,7 +68,7 @@ def ans(data_in: list):
     one_jolt_difference = []
     three_jolt_difference = []
     adapter = det_next_adapter(adapters, joltage)
-    adapters.remove(adapter)
+    # adapters.remove(adapter)
     count = 0
     for _ in range(len(data_in)):
         logger.debug(f'joltage: {joltage}, adapter: {adapter}')
@@ -78,10 +82,10 @@ def ans(data_in: list):
             logger.warning(f'other diff found: {adapter - joltage}')
         joltage = adapter
         adapter = det_next_adapter(adapters, adapter)
-        adapters.remove(adapter)
+        # adapters.remove(adapter)
         count += 1
     device = max(data_in) + 3
-    l3joltd.append(device)
+    three_jolt_difference.append(device)
     l1joltd = len(one_jolt_difference)
     l3joltd = len(three_jolt_difference)
     product = l1joltd * l3joltd
