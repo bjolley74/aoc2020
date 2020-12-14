@@ -7,3 +7,4 @@ day8/
 /.idea
 /day10/part2.py
 /day11
+*.ipynb
