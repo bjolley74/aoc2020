@@ -1,63 +1,32 @@
 from aoc_input import AOCInput
-import logging
-
-#    logger set up
-log_file = "file.log"
-log_level = logging.DEBUG
-f = '%(asctime)-15s: %(levelname)-8s: %(message)s'
-logging.basicConfig(level=log_level, filename=log_file, filemode='w+', format=f)
-logger = logging.getLogger(__name__)
-
-
-def log_wrap(pre, post):
-    """Wrapper"""
-    def decorate(func):
-        """Decorater"""
-        def call(*args, **kwargs):
-            """Actual Wrapper"""
-            pre(func)
-            result = func(*args, **kwargs)
-            post(func)
-            return result
-        return call
-    return decorate
-
-
-def entering(func):
-    """Pre function logging"""
-    logger.debug(f"entered {func.__name__}")
-
-
-def exiting(func):
-    """Post function logging"""
-    logger.debug(f"exiting {func.__name__}")
 
 
 # get_data section
-@log_wrap(entering, exiting)
-def get_data(fn: str) -> list:
-    data_in  = AOCInput(filename=fn)
+def get_data(fn: str) -> tuple:
+    data_in = AOCInput(filename=fn)
     data = data_in.get_input
     # insert logic to change data as necessary
-    output = data
-    return output
+    return int(data[0]), tuple([int(x) for x in data[1].split(',') if x != 'x'])
 
 
-@log_wrap(entering, exiting)
-def ans(data_in: list):
+def ans(data_in: tuple):
     """ans() finds answer to the puzzle"""
-    return 0
+    timestamp = data_in[0]
+    bus_ids = data_in[1]
+    departure_times = [(timestamp - (timestamp % x)) + x for x in bus_ids]
+    min_depart_time = min(departure_times)
+    min_index = departure_times.index(min_depart_time)
+    min_bus_id = bus_ids[min_index]
+    return min_bus_id * (min_depart_time - timestamp)
 
 
-@log_wrap(entering, exiting)
-def test_ans(data_in: list) -> bool:
+def test_ans(data_in: tuple) -> bool:
     """test ans() on test_input.txt"""
     result = ans(data_in)
     # set return to check that ans == expected result
-    return result == 1000000
+    return result == 295
 
 
-@log_wrap(entering, exiting)
 def main():
     # load_test_input
     test_input = get_data('test_input.txt')
