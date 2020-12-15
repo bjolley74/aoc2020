@@ -1,4 +1,3 @@
-from aoc_input import AOCInput
 import logging
 
 #    logger set up
@@ -44,31 +43,39 @@ def get_data(fn: str) -> list:
 
 
 @log_wrap(entering, exiting)
-def ans(data_in: list):
+def ans(starting_numbers: list):
     """ans() finds answer to the puzzle"""
-    return 0
-
-
-@log_wrap(entering, exiting)
-def test_ans(data_in: list) -> bool:
-    """test ans() on test_input.txt"""
-    result = ans(data_in)
-    # set return to check that ans == expected result
-    return result == 1000000
+    numbers_spoken = dict()
+    for x  in range(2020):
+        logger.debug(f'x = {x}')
+        if x < len(starting_numbers):
+            numbers_spoken[x] = starting_numbers[x]
+            logger.debug(f'less than len starting numbers, added {starting_numbers[x]}')
+        else:
+            logger.debug('x greater than len start nums')
+            ns_values = list(numbers_spoken.values())
+            if numbers_spoken[x-1] in ns_values[:-2]:
+                logger.debug(f'number exists: {numbers_spoken[x-1]}')
+                keys_of_matches = []
+                for k, v in numbers_spoken.items():
+                    if v == numbers_spoken[x-1]:
+                        keys_of_matches.append(k)
+                logger.debug(f'keys_of_matches = {keys_of_matches}')
+                logger.debug(f'popped {keys_of_matches.pop()} from list')
+                max_key = max(keys_of_matches)
+                age = x-max_key
+                numbers_spoken[x] = age
+            else:
+                logger.debug(f'first_time: {numbers_spoken[x-1]}')
+                numbers_spoken[x] = 0
+    return numbers_spoken[2019]
 
 
 @log_wrap(entering, exiting)
 def main():
-    # load_test_input
-    test_input = get_data('test_input.txt')
-    if test_ans(test_input):
-        # if test passed then will load and run ans() with the puzzle input
-        puzzle_input = get_data('puzzle_input.txt')
-        answer = ans(puzzle_input)
-        print(f'The answer for puzzle is {answer}')
-    else:
-        # prints if test failed
-        print('Test failed')
+    test = [0,3,6]
+    puzzle = [0,14,1,3,7,9]
+    print(f"The answer for puzzle is {ans(test)}")
 
 
 if __name__ == "__main__":

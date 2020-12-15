@@ -87,25 +87,9 @@ def ans(instructions: list):
 
 
 @log_wrap(entering, exiting)
-def test_ans(data_in: list) -> bool:
-    """test ans() on test_input.txt"""
-    result = ans(data_in)
-    # set return to check that ans == expected result
-    return result == 25
-
-
-@log_wrap(entering, exiting)
 def main():
-    # load_test_input
-    test_input = get_data('test_input.txt')
-    if test_ans(test_input):
-        # if test passed then will load and run ans() with the puzzle input
-        puzzle_input = get_data('puzzle_input.txt')
-        answer = ans(puzzle_input)
-        print(f'The answer for puzzle is {answer}')
-    else:
-        # prints if test failed
-        print('Test failed')
+    # if test passed then will load and run ans() with the puzzle input
+    print(f'The answer for puzzle is {get_data('puzzle_input.txt')}')
 
 
 if __name__ == "__main__":
