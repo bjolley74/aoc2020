@@ -3,10 +3,10 @@
 day7/part2.py
 day8/
 *.pyc
-/venv
-/.idea
-/day10/part2.py
-/day11
+venv
+.idea
+day10/part2.py
+day11/
 *.ipynb
-/day13/part2.py
+day13/part2.py
 day14/*.*
