@@ -2,13 +2,17 @@ import os
 from glob import glob
 from shutil import copyfile
 from pathlib import Path
-try:
-    target_dir = Path('c:/users/bobby/mypython/AOC/aoc2020')
-except FileNotFoundError:
-    target_dir = Path('~/mypython/aoc2020/')
-current_directory = Path(os.getcwd())
-if current_directory != target_dir:
-    os.chdir(target_dir)
+
+# target_dir = Path('c:/users/bobby/mypython/AOC/aoc2020')
+# current_directory = Path(os.getcwd())
+# if current_directory != target_dir:
+#    try:
+#        os.chdir(target_dir)
+#    except:
+#        target_dir = Path('~/mypython/aoc2020')
+#        print('target directory =', target_dir)
+#       os.chdir(target_dir)
+
 
 def main():
     max_num = 0
