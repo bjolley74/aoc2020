@@ -1,74 +1,40 @@
-from aoc_input import AOCInput
-import logging
+from datetime import datetime
 
-#    logger set up
-log_file = "file.log"
-log_level = logging.DEBUG
-f = '%(asctime)-15s: %(levelname)-8s: %(message)s'
-logging.basicConfig(level=log_level, filename=log_file, filemode='w+', format=f)
-logger = logging.getLogger(__name__)
-
-
-def log_wrap(pre, post):
-    """Wrapper"""
-    def decorate(func):
-        """Decorater"""
-        def call(*args, **kwargs):
-            """Actual Wrapper"""
-            pre(func)
-            result = func(*args, **kwargs)
-            post(func)
-            return result
-        return call
-    return decorate
-
-
-def entering(func):
-    """Pre function logging"""
-    logger.debug(f"entered {func.__name__}")
-
-
-def exiting(func):
-    """Post function logging"""
-    logger.debug(f"exiting {func.__name__}")
-
-
-# get_data section
-@log_wrap(entering, exiting)
-def get_data(fn: str) -> list:
-    data_in  = AOCInput(filename=fn)
-    data = data_in.get_input
-    # insert logic to change data as necessary
-    output = data
-    return output
-
-
-@log_wrap(entering, exiting)
-def ans(data_in: list):
+def ans(starting_numbers: list, stop: int):
     """ans() finds answer to the puzzle"""
-    return 0
+    numbers_spoken = dict()
+    for x  in range(1, stop):
+        if x%100 == 0:
+            print(f'working on loop {x}, time now = {datetime.now()}')
+        if x < len(starting_numbers) + 1:
+            numbers_spoken[x] = starting_numbers[x-1]
+        else:
+            ns_values = list(numbers_spoken.values())
+            number = numbers_spoken[x-1]
+            if number in ns_values[:x-2]:
+                keys_of_matches = []
+                for k, v in numbers_spoken.items():
+                    if v == numbers_spoken[x-1]:
+                        keys_of_matches.append(k)
+                pop_key = keys_of_matches.pop()
+                max_key = max(keys_of_matches)
+                age = (x-1)-max_key
+                numbers_spoken[x] = age
+            else:
+                numbers_spoken[x] = 0
+    return numbers_spoken[stop]
 
 
-@log_wrap(entering, exiting)
-def test_ans(data_in: list) -> bool:
-    """test ans() on test_input.txt"""
-    result = ans(data_in)
-    # set return to check that ans == expected result
-    return result == 1000000
-
-
-@log_wrap(entering, exiting)
 def main():
-    # load_test_input
-    test_input = get_data('test_input.txt')
-    if test_ans(test_input):
-        # if test passed then will load and run ans() with the puzzle input
-        puzzle_input = get_data('puzzle_input.txt')
-        answer = ans(puzzle_input)
-        print(f'The answer for puzzle is {answer}')
-    else:
-        # prints if test failed
-        print('Test failed')
+    start = datetime.now()
+    print(f'starting time = {start}')
+    # puzzle = [0,3,6]
+    puzzle = [0,14,1,3,7,9]
+    print(f"The answer for puzzle is {ans(puzzle, 30000000)}")
+    end = datetime.now()
+    print(f'end time = {end}')
+    print(f'elapsed time = {end - start}')
+
 
 
 if __name__ == "__main__":
